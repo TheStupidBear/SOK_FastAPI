@@ -4,11 +4,13 @@ import uvicorn
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from web import filament
 
 
 
 
 app = FastAPI()
+app.include_router(filament.router)
 
 #разрешения
 origins = [
