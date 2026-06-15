@@ -16,5 +16,8 @@ init_producer()
 
 @router.get("")
 @router.get("/")
-def get_all(request: Request):
-    return service.get_all()
+def get_all_producer(request: Request):
+    return template_obj.TemplateResponse(
+        request=request,
+        name="filament.html",
+        context={"filaments": service.get_all_producer()})

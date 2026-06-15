@@ -21,7 +21,7 @@ class Color(BaseModel):
 #производитель филамента (содержит название фирмы и список цветов филамента)
 class ProducerFilament(BaseModel):
     name: str
-    color: list[Color]|None = None
+    # color: list[Color]|None = None
 
 
 

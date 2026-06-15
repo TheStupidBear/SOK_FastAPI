@@ -34,7 +34,9 @@ template_obj = Jinja2Templates(directory=f"{parent_dir}/template")
 #главная страница
 @app.get("/")
 async def top(request: Request):
-    return "Привет, мой друг! Это приложение для определения цвета филамента разных производителей."
+    return template_obj.TemplateResponse(
+        request=request,
+        name="index.html")
 
 
 #подключаем static файлы

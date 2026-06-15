@@ -1,8 +1,8 @@
 from model.filament import ProducerFilament
 import data.filament as data
 
-def get_all() -> list[ProducerFilament]:
-    return data.get_all()
+def get_all_producer() -> list[ProducerFilament]:
+    return data.get_all_producer()
 #
 # def get_one(name: str) -> Creature | None:
 #     return data.get_one(name)
