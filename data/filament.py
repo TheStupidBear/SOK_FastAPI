@@ -21,7 +21,6 @@ def init_producer():
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> ProducerFilament:
     name = row[0]
-    print(name)
     return ProducerFilament(name=name)
 
 #преобразует обьект модели в словарь
@@ -37,7 +36,6 @@ def get_all_producer() -> list[ProducerFilament]:
     curs.execute(qry)
     rows = list(curs.fetchall())
     conn.close()
-    print(rows)
     return [row_to_model(row) for row in rows]
 
 

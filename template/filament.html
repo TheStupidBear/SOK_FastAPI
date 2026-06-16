@@ -5,7 +5,7 @@
 	<div class="container">
   		<div class="item">
   			{% for filament in filaments: %}
-				<h3>{{filament.name}}</h3>
+				<h3><a href="{{ url_for('show_color', producer=filament.name) }}">{{filament.name}}</a></h3>
 			{% endfor %}
   		</div>
 	</div>
