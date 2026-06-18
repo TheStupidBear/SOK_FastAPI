@@ -2,4 +2,17 @@
 
 {% block content %}
 	<h3>Цвета филамента - {{producer}}</h3>
+	<table bgcolor="#eeeeee">
+ 	<tr>
+ 		<th>Название</th>
+ 		<th>Hex</th>
+ 		<th>Изображение</th>
+ 	</tr>
+ 	{% for color in colors: %}
+ 	<tr>
+ 		<td>{{ color.name }}</td>
+ 		<td>{{ color.hex }}</td>
+ 	</tr>
+ 	{% endfor %}
+ </table>
 {% endblock %}

@@ -1,5 +1,5 @@
 from model.filament import Color
-import data.filament as data
+import data.color as data
 
-def get_all_color() -> list[Color]:
-    pass
+def get_producer_color(producer) -> list[Color]:
+    return data.get_producer_color(producer)
