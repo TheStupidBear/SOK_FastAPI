@@ -15,6 +15,7 @@ def init_color():
     curs.execute("""create table if not exists color(
      name text primary key,
      hex text,
+     image text,
      producer_name text,
      FOREIGN KEY (producer_name) REFERENCES producer(name))""")
     # Сохраняем изменения и закрываем соединение
@@ -24,8 +25,8 @@ def init_color():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> Color:
-    name, hex, producer_name = row
-    return Color(name=name, hex=hex, producer_name=producer_name)
+    name, hex, image, producer_name = row
+    return Color(name=name, hex=hex, image=image)
 
 #преобразует обьект модели в словарь
 def model_to_dict(color: Color) -> dict:

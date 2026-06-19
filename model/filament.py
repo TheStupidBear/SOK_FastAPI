@@ -16,7 +16,7 @@ class Example(BaseModel):
 class Color(BaseModel):
     name: str
     hex: Optional[str] = None #необязательное поле
-    # image: Optional[str] = None #необязательное поле
+    image: str #расположение файла
 
 #производитель филамента (содержит название фирмы и список цветов филамента)
 class ProducerFilament(BaseModel):
