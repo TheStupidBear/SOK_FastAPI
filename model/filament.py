@@ -18,10 +18,16 @@ class Color(BaseModel):
     hex: Optional[str] = None #необязательное поле
     image: str #расположение файла
 
+#тип филамента
+class FilamentType(BaseModel):
+    id: int
+    name: str
+    color: list[Color] = []
+
 #производитель филамента (содержит название фирмы и список цветов филамента)
 class ProducerFilament(BaseModel):
     name: str
-    color: list[Color] = []
+    type: list[FilamentType] = []
 
 
 

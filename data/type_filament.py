@@ -1,5 +1,5 @@
 import sqlite3
-from model.filament import Color
+from model.filament import FilamentType
 import os
 
 # 1. Получаем путь к родительской папке (выше текущей)
@@ -9,35 +9,35 @@ parent_dir = os.path.dirname(os.getcwd())
 db_path = os.path.join(parent_dir, 'filament.db')
 
 # создание БД для цвета (связана с фирмой филамента
-def init_color():
+def init_type():
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    curs.execute("""create table if not exists color(
-     name text primary key,
-     hex text,
-     image text,
-     type_name text,
-     FOREIGN KEY (type_name) REFERENCES type(name))""")
+    curs.execute("""create table if not exists type(
+     id integer primary key,
+     name text, 
+     producer_name text,
+     FOREIGN KEY (producer_name) REFERENCES producer(name))""")
     # Сохраняем изменения и закрываем соединение
     conn.commit()
     conn.close()
 
 
 #преобразует кортеж в обьект модели
-def row_to_model(row: tuple) -> Color:
-    name, hex, image, type_name = row
-    return Color(name=name, hex=hex, image=image)
+def row_to_model(row: tuple) -> FilamentType:
+    id = row[0]
+    name = row[1]
+    return FilamentType(id=id, name=name)
 
 #преобразует обьект модели в словарь
-def model_to_dict(color: Color) -> dict:
-    return color.dict()
+def model_to_dict(type: FilamentType) -> dict:
+    return type.dict()
 
 
-def get_producer_color(producer, typefil) -> list[Color]:
+def get_producer_type(producer) -> list[FilamentType]:
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    qry = "select * from color where type_name=:typefil"
-    params = {"typefil": typefil}
+    qry = "select * from type where producer_name=:producer"
+    params = {"producer": producer}
     curs.execute(qry, params)
     rows = list(curs.fetchall())
     conn.close()
