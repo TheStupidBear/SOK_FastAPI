@@ -20,9 +20,10 @@ class Color(BaseModel):
 
 #тип филамента
 class FilamentType(BaseModel):
-    id: int
     name: str
+    type_producer: str
     color: list[Color] = []
+
 
 #производитель филамента (содержит название фирмы и список цветов филамента)
 class ProducerFilament(BaseModel):

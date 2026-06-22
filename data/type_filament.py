@@ -13,9 +13,9 @@ def init_type():
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
     curs.execute("""create table if not exists type(
-     id integer primary key,
-     name text, 
-     producer_name text,
+     type_producer text primary key,
+     name text,
+     producer_name text,  
      FOREIGN KEY (producer_name) REFERENCES producer(name))""")
     # Сохраняем изменения и закрываем соединение
     conn.commit()
@@ -24,9 +24,9 @@ def init_type():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> FilamentType:
-    id = row[0]
     name = row[1]
-    return FilamentType(id=id, name=name)
+    type_producer = row[0]
+    return FilamentType(name=name, type_producer=type_producer)
 
 #преобразует обьект модели в словарь
 def model_to_dict(type: FilamentType) -> dict:
@@ -40,5 +40,6 @@ def get_producer_type(producer) -> list[FilamentType]:
     params = {"producer": producer}
     curs.execute(qry, params)
     rows = list(curs.fetchall())
+    print(f"rows - {rows}")
     conn.close()
     return [row_to_model(row) for row in rows]

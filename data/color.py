@@ -8,7 +8,7 @@ parent_dir = os.path.dirname(os.getcwd())
 # 2. Формируем полный путь к базе данных
 db_path = os.path.join(parent_dir, 'filament.db')
 
-# создание БД для цвета (связана с фирмой филамента
+# создание БД для цвета (связана с типом филамента)
 def init_color():
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
@@ -16,8 +16,8 @@ def init_color():
      name text primary key,
      hex text,
      image text,
-     type_name text,
-     FOREIGN KEY (type_name) REFERENCES type(name))""")
+     type_producer text,
+     FOREIGN KEY (type_producer) REFERENCES type(type_producer))""")
     # Сохраняем изменения и закрываем соединение
     conn.commit()
     conn.close()
@@ -34,10 +34,11 @@ def model_to_dict(color: Color) -> dict:
 
 
 def get_producer_color(producer, typefil) -> list[Color]:
+    type_producer = f"{typefil.lower()}_{producer.lower()}"
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    qry = "select * from color where type_name=:typefil"
-    params = {"typefil": typefil}
+    qry = "select * from color where type_producer=:type_producer"
+    params = {"type_producer": type_producer}
     curs.execute(qry, params)
     rows = list(curs.fetchall())
     conn.close()

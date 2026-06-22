@@ -42,8 +42,6 @@ def get_color(request: Request, producer: str):
 @router.get("{producer}/{typefil}", name="show_color")
 @router.get("/{producer}/{typefil}", name="show_color")
 def get_color(request: Request, producer: str, typefil: str):
-    print(producer)
-    print(typefil)
     return template_obj.TemplateResponse(
         request=request,
         name="color.html",
