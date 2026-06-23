@@ -13,11 +13,12 @@ def init_color():
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
     curs.execute("""create table if not exists color(
-     name text primary key,
+     color_type_producer text primary key,
+     name text,
      hex text,
      image text,
-     type_producer text,
-     FOREIGN KEY (type_producer) REFERENCES type(type_producer))""")
+     type_connection text,
+     FOREIGN KEY (type_connection) REFERENCES type(type_producer))""")
     # Сохраняем изменения и закрываем соединение
     conn.commit()
     conn.close()
@@ -25,7 +26,7 @@ def init_color():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> Color:
-    name, hex, image, type_name = row
+    name, hex, image = row
     return Color(name=name, hex=hex, image=image)
 
 #преобразует обьект модели в словарь

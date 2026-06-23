@@ -24,9 +24,8 @@ def init_type():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> FilamentType:
-    name = row[1]
-    type_producer = row[0]
-    return FilamentType(name=name, type_producer=type_producer)
+    name = row[0]
+    return FilamentType(name=name)
 
 #преобразует обьект модели в словарь
 def model_to_dict(type: FilamentType) -> dict:

@@ -4,7 +4,7 @@ from typing import Optional
 
 #модель примеров
 class Example(BaseModel):
-    name: str
+    id: int
     desc: Optional[str] = None  # необязательное поле
     image: str #расположение файла
 
@@ -13,12 +13,13 @@ class Color(BaseModel):
     name: str
     hex: Optional[str] = None #необязательное поле
     image: str #расположение файла
+    # color_type_producer: str
     example: list[Example] = [] #список примеров цвета
 
 #тип филамента
 class FilamentType(BaseModel):
     name: str
-    type_producer: str
+    # type_producer: str
     color: list[Color] = []
 
 
