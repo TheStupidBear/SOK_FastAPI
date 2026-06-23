@@ -48,3 +48,13 @@ def get_color(request: Request, producer: str, typefil: str):
         context={"producer": producer,
                  "typefil": typefil,
                  "colors": service_color.get_producer_color(producer, typefil)})
+
+@router.get("{producer}/{typefil}/{color}", name="show_example")
+@router.get("/{producer}/{typefil}/{color}", name="show_example")
+def get_color(request: Request, producer: str, typefil: str, color: str):
+    return template_obj.TemplateResponse(
+        request=request,
+        name="example.html",
+        context={"producer": producer,
+                 "typefil": typefil,
+                 "color": color})

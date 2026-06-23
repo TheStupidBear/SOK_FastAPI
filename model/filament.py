@@ -1,22 +1,19 @@
 from pydantic import BaseModel
 from typing import Optional
 
-#модель изображения
-class Image(BaseModel):
-    id: str
-    url: str
 
 #модель примеров
 class Example(BaseModel):
     name: str
     desc: Optional[str] = None  # необязательное поле
-    image: Image
+    image: str #расположение файла
 
 #модель цвета филамента
 class Color(BaseModel):
     name: str
     hex: Optional[str] = None #необязательное поле
     image: str #расположение файла
+    example: list[Example] = [] #список примеров цвета
 
 #тип филамента
 class FilamentType(BaseModel):

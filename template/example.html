@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block content %}
+	<h3>Примеры - {{producer}} - {{typefil}} - {{color}}</h3>
+	<table bgcolor="#eeeeee">
+ 	<tr>
+ 		<th>Название</th>
+ 		<th>Описание</th>
+ 		<th>Изображение</th>
+ 	</tr>
+ 	{% for example in examples: %}
+ 	<tr>
+ 		<td>{{ example.name }}</td>
+ 		<td>{{ example.desc }}</td>
+ 		<td>{{ example.image }}</td>
+ 	</tr>
+ 	{% endfor %}
+ </table>
+{% endblock %}
