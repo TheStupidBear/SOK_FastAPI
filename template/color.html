@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
-	<h3>Цвета филамента - {{producer}}</h3>
+	<h3>Цвета филамента - {{producer}} - {{typefil}}</h3>
 	<table bgcolor="#eeeeee">
  	<tr>
  		<th>Название</th>
@@ -12,7 +12,7 @@
  	<tr>
  		<td>{{ color.name }}</td>
  		<td>{{ color.hex }}</td>
- 		<td>{{ color.image }}</td>
+ 		<td><img src={{ color.image }} width="200" height="50" alt="Не прогрузилось("></td>
  	</tr>
  	{% endfor %}
  </table>

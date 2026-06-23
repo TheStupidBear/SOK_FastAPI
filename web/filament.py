@@ -46,4 +46,5 @@ def get_color(request: Request, producer: str, typefil: str):
         request=request,
         name="color.html",
         context={"producer": producer,
+                 "typefil": typefil,
                  "colors": service_color.get_producer_color(producer, typefil)})

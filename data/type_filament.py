@@ -40,6 +40,5 @@ def get_producer_type(producer) -> list[FilamentType]:
     params = {"producer": producer}
     curs.execute(qry, params)
     rows = list(curs.fetchall())
-    print(f"rows - {rows}")
     conn.close()
     return [row_to_model(row) for row in rows]
