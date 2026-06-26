@@ -12,12 +12,12 @@ db_path = os.path.join(parent_dir, 'filament.db')
 def init_example():
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    curs.execute("""create table if not exists color(
+    curs.execute("""create table if not exists example(
      id integer primary key,
      desc text, 
      image text,
      color_connection text,
-     FOREIGN KEY (color_connection) REFERENCES type(color_type_producer))""")
+     FOREIGN KEY (color_connection) REFERENCES color(color_type_producer))""")
     # Сохраняем изменения и закрываем соединение
     conn.commit()
     conn.close()
@@ -25,7 +25,9 @@ def init_example():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> Example:
-    id, desc, image = row
+    id = row[0]
+    desc = row[1]
+    image = row[2]
     return Example(id=id, desc=desc, image=image)
 
 #преобразует обьект модели в словарь
@@ -41,5 +43,6 @@ def get_color_example(producer, typefil, color) -> list[Example]:
     params = {"color_connection": color_connection}
     curs.execute(qry, params)
     rows = list(curs.fetchall())
+    print(rows)
     conn.close()
     return [row_to_model(row) for row in rows]

@@ -3,9 +3,11 @@ from fastapi.templating import Jinja2Templates
 import service.filament as service_producer
 import service.color as service_color
 import service.type_filament as service_type
+import service.example as service_example
 from data.filament import init_producer
 from data.color import init_color
 from data.type_filament import init_type
+from data.example import init_example
 from pathlib import Path
 
 
@@ -15,10 +17,11 @@ router = APIRouter(prefix="/filament", tags=["filament"])
 parent_dir = Path(__file__).resolve().parent.parent
 template_obj = Jinja2Templates(directory=f"{parent_dir}/template")
 
-#создаем БД с таблицей producer, color, type
+#создаем БД с таблицей producer, color, type, example
 init_producer()
 init_color()
 init_type()
+init_example()
 
 @router.get("")
 @router.get("/")
@@ -57,4 +60,5 @@ def get_color(request: Request, producer: str, typefil: str, color: str):
         name="example.html",
         context={"producer": producer,
                  "typefil": typefil,
-                 "color": color})
+                 "color": color,
+                 "examples": service_example.get_color_example(producer, typefil, color)})

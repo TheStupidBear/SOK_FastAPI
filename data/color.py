@@ -26,7 +26,9 @@ def init_color():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> Color:
-    name, hex, image = row
+    name = row[1]
+    hex = row[2]
+    image = row[3]
     return Color(name=name, hex=hex, image=image)
 
 #преобразует обьект модели в словарь
@@ -35,12 +37,13 @@ def model_to_dict(color: Color) -> dict:
 
 
 def get_producer_color(producer, typefil) -> list[Color]:
-    type_producer = f"{typefil.lower()}_{producer.lower()}"
+    type_connection = f"{typefil.lower()}_{producer.lower()}"
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    qry = "select * from color where type_producer=:type_producer"
-    params = {"type_producer": type_producer}
+    qry = "select * from color where type_connection=:type_connection"
+    params = {"type_connection": type_connection}
     curs.execute(qry, params)
     rows = list(curs.fetchall())
+    print(rows)
     conn.close()
     return [row_to_model(row) for row in rows]
