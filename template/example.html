@@ -1,6 +1,23 @@
 {% extends 'main.html' %}
 
 {% block content %}
+	<style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        img {
+            max-width: 150px; /* Ограничиваем максимальную ширину картинки */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 	<h3>Примеры - {{producer}} - {{typefil}} - {{color}}</h3>
 	<table bgcolor="#eeeeee">
  	<tr>
