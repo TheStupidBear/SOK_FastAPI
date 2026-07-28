@@ -23,7 +23,7 @@ init_color()
 init_type()
 init_example()
 
-@router.get("")
+
 @router.get("/")
 def get_all_producer(request: Request):
     return template_obj.TemplateResponse(
@@ -32,7 +32,6 @@ def get_all_producer(request: Request):
         context={"filaments": service_producer.get_all_producer()})
 
 #получение типов филамента определенного бренда филамента
-@router.get("{producer}", name="show_type")
 @router.get("/{producer}", name="show_type")
 def get_color(request: Request, producer: str):
     return template_obj.TemplateResponse(
@@ -42,7 +41,6 @@ def get_color(request: Request, producer: str):
                  "types": service_type.get_producer_type(producer)})
 
 #получение цветов определенного бренда и типа филамента
-@router.get("{producer}/{typefil}", name="show_color")
 @router.get("/{producer}/{typefil}", name="show_color")
 def get_color(request: Request, producer: str, typefil: str):
     return template_obj.TemplateResponse(
@@ -52,7 +50,8 @@ def get_color(request: Request, producer: str, typefil: str):
                  "typefil": typefil,
                  "colors": service_color.get_producer_color(producer, typefil)})
 
-@router.get("{producer}/{typefil}/{color}", name="show_example")
+
+# получение примеров изделий по цвету
 @router.get("/{producer}/{typefil}/{color}", name="show_example")
 def get_color(request: Request, producer: str, typefil: str, color: str):
     return template_obj.TemplateResponse(
