@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+	<h1>Войти</h1>
+	<form action="/user/token" method="post">
+		<label for="username">Логин:</label>
+		<input type="text" name="username">
+		<p>
+			<label for="password">Пароль:</label>
+			<input type="password" name="password">
+		</p>
+		<input type="submit">
+	</form>
+
+{% endblock %}

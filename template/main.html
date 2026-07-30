@@ -1,5 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+	html * {
+ 		font-size: 20pt;
+ 		font-family: Courier, sans-serif;
+	}
+	body {
+ 		margin: 0 auto;
+ 		max-width: 1000px;
+	}
+	.container {
+    	display: flex; /* Активирует Flexbox */
+    	gap: 10px;    /* Расстояние между элементами */
+  		}
+  	.item {
+    	width: 50%;
+  		}
+  	.user {
+  		display: flex; /* Активирует Flexbox */
+    	width: 50%;
+    	margin-top: 10%;
+  		}
+</style>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +33,19 @@
 			<h3><a href="/">Главная страница</a></h3>
 			<h3><a href="/filament">Филамент</a></h3>
   		</div>
+  		<div class="item">
+  			<div class="user" id="user">
+  				<form  action="/user/login">
+  					<button type="submit" id="button_login">Логин</button>
+  				</form>
+  				<form action="/user/registration">
+  					<button type="submit" id="button_reg">Регистрация</button>
+  				</form>
+    		</div>
+    		<h1 id="message">{{message}}</h1>
+  		</div>
 	</div>
+	
 
 	<div class="body">
 		{% block content %}
