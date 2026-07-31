@@ -30,7 +30,7 @@ async def get_token(request: Request, username: Annotated[str, Form()], password
     print(f"token - {token}")
     return template_obj.TemplateResponse(
         request=request,
-        name="index.html",
+        name="success_login.html",
         context={"request": request,
                 "token": token.access_token})
 

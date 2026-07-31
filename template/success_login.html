@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+	<script>
+		// Внедряем данные из контекста шаблона в JS
+        const accessToken = {{ token | tojson }};
+        //сохраняем токен
+		saveToken(accessToken);
+		// // перенаправление на главную страницу
+		// window.location.href = '/';
+	</script>
+	
+{% endblock %}
