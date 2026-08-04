@@ -32,16 +32,17 @@
 	<div class="container">
   		<div class="item">
 			<h3><a href="/">Главная страница</a></h3>
-			<h3><a href="/filament">Филамент</a></h3>
+			<h3><a href="/filament" id="filament_id">Филамент</a></h3>
   		</div>
   		<div class="item">
   			<div class="user" id="user">
-  				<form  action="/user/login">
+  				<form  action="/user/login" id="login_form">
   					<button type="submit" id="button_login">Логин</button>
   				</form>
-  				<form action="/user/registration">
+  				<form action="/user/registration" id="reg_form">
   					<button type="submit" id="button_reg">Регистрация</button>
   				</form>
+  				<button type="submit" id="button_exit">Выйти</button>
     		</div>
     		<h1 id="message">{{message}}</h1>
   		</div>
@@ -52,5 +53,25 @@
 		{% block content %}
 		{% endblock %}
 	</div>
+
+	<script>
+		function LogOut(){
+    		// Удаление access token из localStorage
+			localStorage.removeItem('token');
+			document.getElementById("message").innerHTML = "Вы вышли из профиля.";
+			// перенаправление на главную страницу
+			window.location.href = "/";
+		}
+		// назначаем функцию для выхода из аутентификации
+		document.getElementById('button_exit').addEventListener('click', LogOut);
+
+		// отправка токена на адрес
+        async function getdata(){
+            const data = await sendTokenMain();
+        }
+        getdata();
+
+
+</script>
 </body>
 </html>

@@ -1,14 +1,16 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 import service.producer_filament as service_producer
 import service.color as service_color
 import service.type_filament as service_type
 import service.example as service_example
+import service.user as service_user
 from data.producer_filament import init_producer
 from data.color import init_color
 from data.type_filament import init_type
 from data.example import init_example
 from pathlib import Path
+from typing import Annotated
 
 
 
