@@ -3,3 +3,5 @@
 __pycache__
 .env
 filament.db
+image_color/
+image_example/

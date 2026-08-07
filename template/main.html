@@ -21,6 +21,16 @@
     	width: 50%;
     	margin-top: 10%;
   		}
+  	table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+    th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+    
 </style>
 <head>
 	<meta charset="UTF-8">
@@ -62,6 +72,7 @@
 			// перенаправление на главную страницу
 			window.location.href = "/";
 		}
+		
 		// назначаем функцию для выхода из аутентификации
 		document.getElementById('button_exit').addEventListener('click', LogOut);
 

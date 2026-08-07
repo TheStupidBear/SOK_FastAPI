@@ -1,36 +1,42 @@
 {% extends 'main.html' %}
 
+
 {% block content %}
-	<style>
-        table {
-            width: 50%;
-            border-collapse: collapse;
+    <style>
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px;
+            padding: 15px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
+
+        .gallery img {
+            width: 75%;
+            height: 200px;
+            object-type: cover; /* или object-fit: cover */
+            border-radius: 8px;
         }
-        img {
-            max-width: 150px; /* Ограничиваем максимальную ширину картинки */
-            height: auto;
-            display: block;
-            margin: 0 auto;
+        .photo {
+            border: 3px solid black; /* толщина, стиль, цвет */
         }
-    </style>
+        figcaption {
+            font-size: 15px;
+        }
+    </style>    
 	<h3>Примеры - {{producer}} - {{typefil}} - {{color}}</h3>
-	<table bgcolor="#eeeeee">
- 	<tr>
- 		<th>id</th>
- 		<th>Описание</th>
- 		<th>Изображение</th>
- 	</tr>
- 	{% for example in examples: %}
- 	<tr>
- 		<td>{{ example.id }}</td>
- 		<td>{{ example.desc }}</td>
- 		<td>{{ example.image }}</td>
- 	</tr>
- 	{% endfor %}
- </table>
+    <a href="{{ url_for('add_example', color_connection=color_connection) }}">
+        <button type="submit">Добавить пример</button>
+    </a>
+    <p></p>
+    <div class="gallery">
+ 	  {% for example in examples: %}
+            <figure class="photo">
+                <img src={{ example.image }} alt="Не прогрузилось(">
+                <div class="signature">
+                    <figcaption>{{ example.desc }}</figcaption>
+                    <figcaption>User - {{ example.user }}</figcaption>
+                </div>
+            </figure>
+ 	  {% endfor %}
+    </div>
 {% endblock %}
