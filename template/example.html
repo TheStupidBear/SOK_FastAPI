@@ -15,9 +15,7 @@
             height: 200px;
             object-type: cover; /* или object-fit: cover */
             border-radius: 8px;
-        }
-        .photo {
-            border: 3px solid black; /* толщина, стиль, цвет */
+            border: 1px solid black; /* толщина, стиль, цвет */
         }
         figcaption {
             font-size: 15px;
@@ -25,9 +23,10 @@
     </style>    
 	<h3>Примеры - {{producer}} - {{typefil}} - {{color}}</h3>
     <a href="{{ url_for('add_example', color_connection=color_connection) }}">
-        <button type="submit">Добавить пример</button>
+        <button type="submit" id="add_example_button">Добавить пример</button>
     </a>
     <p></p>
+    <p>{{add_example_message}}</p>
     <div class="gallery">
  	  {% for example in examples: %}
             <figure class="photo">
@@ -39,4 +38,7 @@
             </figure>
  	  {% endfor %}
     </div>
+    <script>
+        document.getElementById('add_example_button').addEventListener('click', sendToken);
+    </script>
 {% endblock %}

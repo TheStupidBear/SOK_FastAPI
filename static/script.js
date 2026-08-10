@@ -49,11 +49,14 @@ async function sendTokenMain(){
 
 
 // отправляем токен
-async function sendToken(){
+async function sendToken(event){
+	event.preventDefault();
 	try {
 		//1. Получаем токен из хранилища
 		const token = localStorage.getItem('token');
-		const response = await fetch('http://localhost:8000/user/me', {
+		//получаем ссылку с event
+		const targetUrl = event.target.closest('a').href; 
+		const response = await fetch(targetUrl, {
     		method: 'GET',
     		headers: {
         		'Authorization': `Bearer ${token}`,
@@ -63,11 +66,15 @@ async function sendToken(){
 		// Проверяем успешность HTTP-статуса (от 200 до 299)
     	if (!response.ok) {
         	console.error('Ошибка сервера, статус:', response.status);
+        	console.log('Не авторизован');
     	}
         else{
-        	// Превращаем ответ в объект JavaScript
-    		const data = await response.json();
-    		console.log(data);
+        	console.log('Авторизован');
+    		const html = await response.text();
+        	document.open();
+        	document.write(html);
+        	document.close();
+        	window.history.pushState({}, '', targetUrl);
         }
 		}
 	catch (error) {
@@ -77,31 +84,6 @@ async function sendToken(){
 
 
 
-
-// 		document.getElementById('filament_id').addEventListener('click', async (event) => {
-//     	event.preventDefault();
-    
-//     const token = localStorage.getItem('token');
-//     const targetUrl = event.target.href;
-
-//     const response = await fetch(targetUrl, {
-//         method: 'GET',
-//         headers: {
-//             // Префикс 'Bearer ' обязателен для работы HTTPBearer()
-//             'Authorization': `Bearer ${token}` 
-//         }
-//     });
-
-//     if (response.ok) {
-//         const html = await response.text();
-//         document.open();
-//         document.write(html);
-//         document.close();
-//         window.history.pushState({}, '', targetUrl);
-//     } else {
-//         alert('Ошибка авторизации через Depends: ' + response.status);
-//     }
-// });
 
 
 

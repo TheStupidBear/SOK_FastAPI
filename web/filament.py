@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Request, UploadFile, HTTPException, Form
+from fastapi import APIRouter, Request, UploadFile, HTTPException, Form, Depends
 from fastapi.templating import Jinja2Templates
 import aiofiles
+from typing import Annotated
 import service.producer_filament as service_producer
 import service.color as service_color
 import service.type_filament as service_type
 import service.example as service_example
+import service.user as service_user
 from data.producer_filament import init_producer
 from data.color import init_color
 from data.type_filament import init_type
@@ -30,8 +32,8 @@ init_example()
 
 #загрузка фото и описания
 @router.post("/{color_connection}/upload_image", name="upload_image")
-async def create_upload_file(color_connection: str, file: UploadFile, desc: str = Form(...)):
-    print(color_connection)
+async def create_upload_file(color_connection: str, request: Request,
+                             file: UploadFile, desc: str = Form(...)):
     #если файл не изображение
     if file.content_type not in ["image/jpeg", "image/png"]:
         raise HTTPException(400, detail="Недопустимый тип файла")
@@ -44,8 +46,14 @@ async def create_upload_file(color_connection: str, file: UploadFile, desc: str 
         example = Example(desc=desc, color_connection=color_connection,
                           image=f"/static/image_example/{file.filename}", user='dimas_test')
         service_example.create_example(example)
+        add_example_message = "Добавили ваш пример"
 
-        return {"filename": file.filename, "status": "saved", "desc": desc}
+        return template_obj.TemplateResponse(
+            request=request,
+            name="example.html",
+            context={"color_connection": color_connection,
+                     "add_example_message": add_example_message,
+                     "examples": service_example.get_color_example(color_connection)})
 
 @router.get("/")
 def get_all_producer(request: Request):
@@ -56,11 +64,14 @@ def get_all_producer(request: Request):
 
 #добавить пример
 @router.get("/{color_connection}/add_example", name="add_example")
-def add_example(request: Request, color_connection: str):
+def add_example(request: Request, color_connection: str,
+                username: Annotated[str, Depends(service_user.get_current_user)],):
+    print(username)
     return template_obj.TemplateResponse(
         request=request,
         name="add_example.html",
-        context={"color_connection": color_connection})
+        context={"color_connection": color_connection,
+                 "username": username})
 
 #получение типов филамента определенного бренда филамента
 @router.get("/{producer}", name="show_type")
