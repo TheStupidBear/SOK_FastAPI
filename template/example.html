@@ -25,7 +25,7 @@
     <a href="{{ url_for('add_example', color_connection=color_connection) }}">
         <button type="submit" id="add_example_button">Добавить пример</button>
     </a>
-    <p></p>
+    <p id="error_message"></p>
     <p>{{add_example_message}}</p>
     <div class="gallery">
  	  {% for example in examples: %}
@@ -33,12 +33,15 @@
                 <img src={{ example.image }} alt="Не прогрузилось(">
                 <div class="signature">
                     <figcaption>{{ example.desc }}</figcaption>
-                    <figcaption>User - {{ example.user }}</figcaption>
+                    <figcaption>user - {{ example.user }}</figcaption>
                 </div>
             </figure>
  	  {% endfor %}
     </div>
     <script>
-        document.getElementById('add_example_button').addEventListener('click', sendToken);
+        document.getElementById('add_example_button').addEventListener('click', (event) => {
+            const targetUrl = event.target.closest('a').href; 
+            sendToken(event, 'GET', targetUrl);
+        });
     </script>
 {% endblock %}

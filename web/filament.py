@@ -30,38 +30,6 @@ init_color()
 init_type()
 init_example()
 
-#загрузка фото и описания
-@router.post("/{color_connection}/upload_image", name="upload_image")
-async def create_upload_file(color_connection: str, request: Request,
-                             file: UploadFile, desc: str = Form(...)):
-    #если файл не изображение
-    if file.content_type not in ["image/jpeg", "image/png"]:
-        raise HTTPException(400, detail="Недопустимый тип файла")
-    else:
-        file_path = f"{parent_dir}/static/image_example/{file.filename}"
-        # Открываем целевой файл асинхронно для записи байтов ("wb")
-        async with aiofiles.open(file_path, "wb") as out_file:
-            while content := await file.read(CHUNK_SIZE):
-                await out_file.write(content)
-        example = Example(desc=desc, color_connection=color_connection,
-                          image=f"/static/image_example/{file.filename}", user='dimas_test')
-        service_example.create_example(example)
-        add_example_message = "Добавили ваш пример"
-
-        return template_obj.TemplateResponse(
-            request=request,
-            name="example.html",
-            context={"color_connection": color_connection,
-                     "add_example_message": add_example_message,
-                     "examples": service_example.get_color_example(color_connection)})
-
-@router.get("/")
-def get_all_producer(request: Request):
-    return template_obj.TemplateResponse(
-        request=request,
-        name="filament.html",
-        context={"filaments": service_producer.get_all_producer()})
-
 #добавить пример
 @router.get("/{color_connection}/add_example", name="add_example")
 def add_example(request: Request, color_connection: str,
@@ -73,9 +41,19 @@ def add_example(request: Request, color_connection: str,
         context={"color_connection": color_connection,
                  "username": username})
 
+#получение всех производителей филамента
+@router.get("/")
+def get_all_producer(request: Request):
+    return template_obj.TemplateResponse(
+        request=request,
+        name="filament.html",
+        context={"filaments": service_producer.get_all_producer()})
+
+
+
 #получение типов филамента определенного бренда филамента
 @router.get("/{producer}", name="show_type")
-def get_color(request: Request, producer: str):
+def get_type(request: Request, producer: str):
     return template_obj.TemplateResponse(
         request=request,
         name="type.html",
@@ -95,7 +73,7 @@ def get_color(request: Request, producer: str, typefil: str):
 
 # получение примеров изделий по цвету
 @router.get("/{producer}/{typefil}/{color}", name="show_example")
-def get_color(request: Request, producer: str, typefil: str, color: str):
+def get_example(request: Request, producer: str, typefil: str, color: str):
     color_connection = f"{color.lower()}_{typefil.lower()}_{producer.lower()}"
     return template_obj.TemplateResponse(
         request=request,
@@ -106,3 +84,30 @@ def get_color(request: Request, producer: str, typefil: str, color: str):
                  "color_connection": color_connection,
                  "examples": service_example.get_color_example(color_connection)})
 
+
+
+#загрузка фото и описания
+@router.post("/{color_connection}/{username}/upload_image", name="upload_image")
+async def create_upload_file(color_connection: str, request: Request,
+                             username: str,
+                             file: UploadFile, desc: str = Form(...),):
+    #если файл не изображение
+    if file.content_type not in ["image/jpeg", "image/png"]:
+        raise HTTPException(400, detail="Недопустимый тип файла")
+    else:
+        file_path = f"{parent_dir}/static/image_example/{file.filename}"
+        # Открываем целевой файл асинхронно для записи байтов ("wb")
+        async with aiofiles.open(file_path, "wb") as out_file:
+            while content := await file.read(CHUNK_SIZE):
+                await out_file.write(content)
+        example = Example(desc=desc, color_connection=color_connection,
+                          image=f"/static/image_example/{file.filename}", user=username)
+        service_example.create_example(example)
+        add_example_message = "Добавили ваш пример"
+
+        return template_obj.TemplateResponse(
+            request=request,
+            name="example.html",
+            context={"color_connection": color_connection,
+                     "add_example_message": add_example_message,
+                     "examples": service_example.get_color_example(color_connection)})

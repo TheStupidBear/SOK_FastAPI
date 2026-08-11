@@ -49,15 +49,13 @@ async function sendTokenMain(){
 
 
 // отправляем токен
-async function sendToken(event){
+async function sendToken(event, request_type, targetUrl){
 	event.preventDefault();
 	try {
 		//1. Получаем токен из хранилища
 		const token = localStorage.getItem('token');
-		//получаем ссылку с event
-		const targetUrl = event.target.closest('a').href; 
 		const response = await fetch(targetUrl, {
-    		method: 'GET',
+    		method: request_type,
     		headers: {
         		'Authorization': `Bearer ${token}`,
         		'Content-Type': 'application/json'
@@ -67,6 +65,8 @@ async function sendToken(event){
     	if (!response.ok) {
         	console.error('Ошибка сервера, статус:', response.status);
         	console.log('Не авторизован');
+        	const p = document.querySelector('#error_message');
+			p.textContent = 'Авторизуйтесь.';
     	}
         else{
         	console.log('Авторизован');
