@@ -15,18 +15,19 @@ class Color(BaseModel):
     name: str
     hex: Optional[str] = None #необязательное поле
     image: str #расположение файла
-    example: list[Example] = [] #список примеров цвета
+    type_connection: str #строка тип-производитель
+    # example: list[Example] = [] #список примеров цвета
 
 #тип филамента
 class FilamentType(BaseModel):
     name: str
-    color: list[Color] = []
+    # color: list[Color] = []
 
 
 #производитель филамента (содержит название фирмы и список цветов филамента)
 class ProducerFilament(BaseModel):
     name: str
-    type: list[FilamentType] = []
+    # type: list[FilamentType] = []
 
 
 

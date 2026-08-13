@@ -49,7 +49,15 @@ def get_all_producer(request: Request):
         name="filament.html",
         context={"filaments": service_producer.get_all_producer()})
 
-
+#поиск по цвету
+@router.get('/search')
+def search_items(request: Request, q: str):
+  colors = service_color.get_search_color(q)
+  return template_obj.TemplateResponse(
+      request=request,
+      name="search_color.html",
+      context={"colors": colors,
+               "q": q})
 
 #получение типов филамента определенного бренда филамента
 @router.get("/{producer}", name="show_type")

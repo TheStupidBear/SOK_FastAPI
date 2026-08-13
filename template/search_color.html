@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% block content %}
+	<style>
+		.table img {
+            max-width: 150px; /* Ограничиваем максимальную ширину картинки */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+	</style>
+	<p>Поиск по цвету "{{q}}"</p>
+	<table bgcolor="#eeeeee">
+ 	<tr>
+ 		<th>Название</th>
+ 		<th>Hex</th>
+ 		<th>Изображение</th>
+ 		<th>Тип-Производитель</th>
+ 	</tr>
+ 	{% for color in colors: %}
+ 	<tr class="table">
+ 		<td>{{ color.name }}</td>
+ 		<td>{{ color.hex }}</td>
+ 		<td><img src={{ color.image }} alt="Не прогрузилось("></td>
+ 		<td>{{ color.type_connection }}</td>
+ 	</tr>
+ 	{% endfor %}
+ </table>
+{% endblock %}
