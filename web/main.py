@@ -7,8 +7,6 @@ from fastapi.templating import Jinja2Templates
 from web import filament, user
 
 
-
-
 app = FastAPI()
 app.include_router(filament.router)
 app.include_router(user.router)
