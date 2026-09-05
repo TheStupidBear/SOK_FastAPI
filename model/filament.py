@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
-from model.user import User
+
 
 
 #модель примеров
@@ -12,22 +11,20 @@ class Example(BaseModel):
 
 #модель цвета филамента
 class Color(BaseModel):
+    color_type_producer: str
     name: str
-    hex: Optional[str] = None #необязательное поле
+    hex: str
     image: str #расположение файла
     type_connection: str #строка тип-производитель
-    # example: list[Example] = [] #список примеров цвета
 
 #тип филамента
 class FilamentType(BaseModel):
     name: str
-    # color: list[Color] = []
 
 
 #производитель филамента (содержит название фирмы и список цветов филамента)
 class ProducerFilament(BaseModel):
     name: str
-    # type: list[FilamentType] = []
 
 
 

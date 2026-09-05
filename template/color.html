@@ -10,6 +10,10 @@
         }
 	</style>
 	<h3>Цвета филамента - {{type_connection}}</h3>
+	<a href="{{ url_for('add_color', type_connection=type_connection) }}">
+        <button type="submit" id="add_color_button">Добавить цвет</button>
+    </a>
+    <p id="error_message"></p>
 	<table bgcolor="#eeeeee">
  	<tr>
  		<th>Название</th>
@@ -26,4 +30,10 @@
  	</tr>
  	{% endfor %}
  </table>
+ <script>
+        document.getElementById('add_color_button').addEventListener('click', (event) => {
+            const targetUrl = event.target.closest('a').href; 
+            sendToken(event, 'GET', targetUrl);
+        });
+ </script>
 {% endblock %}

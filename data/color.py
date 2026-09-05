@@ -26,11 +26,13 @@ def init_color():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> Color:
+    color_type_producer = row[0]
     name = row[1]
     hex = row[2]
     image = row[3]
     type_connection = row[4]
-    return Color(name=name, hex=hex, image=image, type_connection=type_connection)
+    return Color(color_type_producer=color_type_producer, name=name, hex=hex, image=image,
+                 type_connection=type_connection)
 
 #преобразует обьект модели в словарь
 def model_to_dict(color: Color) -> dict:
@@ -48,14 +50,31 @@ def get_producer_color(type_connection) -> list[Color]:
     return [row_to_model(row) for row in rows]
 
 
-def get_search_color(name) -> list[Color]:
+def get_search_color(hex) -> list[Color]:
     # 4. Формируем шаблон с процентами прямо в значении параметра
-    search_pattern = f'%{name}%'
+    search_pattern = f'%{hex}%'
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    qry = "select * from color where name like ?"
+    qry = "select * from color where hex like ?"
     params = (search_pattern,)
     curs.execute(qry, params)
     rows = list(curs.fetchall())
     conn.close()
     return [row_to_model(row) for row in rows]
+
+
+def create(color: Color):
+    if not color: return None
+    conn = sqlite3.connect(db_path)
+    curs = conn.cursor()
+    qry = """insert into color (color_type_producer, name, hex, image, type_connection) values
+        (:color_type_producer, :name, :hex, :image, :type_connection)"""
+    params = model_to_dict(color)
+    try:
+        curs.execute(qry, params)
+    except sqlite3.IntegrityError:
+        raise f"Color {color.name} already exists"
+    # Сохраняем изменения и закрываем соединение
+    conn.commit()
+    conn.close()
+    return color.name

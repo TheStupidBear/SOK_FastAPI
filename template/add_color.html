@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% block content %}
+	<h1>Добавить цвет</h1>
+	<form action="{{ url_for('create_color', type_connection=type_connection) }}" method="POST">
+		<label for="name">Название: (без пробела)</label>
+		<p><input type="text" name="name"></p>
+		<label for="hex">Hex:</label>
+		<p><input type="text" name="hex"></p>
+   
+    	<button type="submit" id="create_color_button">Добавить цвет</button>
+	</form>
+	
+{% endblock %}
