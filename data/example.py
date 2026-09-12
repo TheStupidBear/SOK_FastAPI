@@ -14,6 +14,9 @@ def init_example():
     curs = conn.cursor()
     curs.execute("""create table if not exists example(
      id integer primary key,
+     printer text, 
+     table_temperature integer,
+     extruder_temperature integer,
      desc text, 
      image text,
      user text,
@@ -26,11 +29,16 @@ def init_example():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> Example:
-    desc = row[1]
-    image = row[2]
-    user = row[3]
-    color_connection = row[4]
-    return Example(desc=desc, image=image, user=user, color_connection=color_connection)
+    printer = row[1]
+    table_temperature = row[2]
+    extruder_temperature = row[3]
+    desc = row[4]
+    image = row[5]
+    user = row[6]
+    color_connection = row[7]
+    return Example(printer=printer, table_temperature=table_temperature,
+                   extruder_temperature=extruder_temperature, desc=desc,
+                   image=image, user=user, color_connection=color_connection)
 
 #преобразует обьект модели в словарь
 def model_to_dict(example: Example) -> dict:
@@ -51,13 +59,15 @@ def create(example: Example):
     if not example: return None
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    qry = """insert into example (desc, image, color_connection, user) values
-        (:desc, :image, :color_connection, :user)"""
+    qry = """insert into example (printer, table_temperature, extruder_temperature,
+             desc, image, color_connection, user) values
+            (:printer, :table_temperature, :extruder_temperature,
+             :desc, :image, :color_connection, :user)"""
     params = model_to_dict(example)
     try:
         curs.execute(qry, params)
     except sqlite3.IntegrityError:
-        raise f"Creature {example.desc} already exists"
+        raise f"Example {example.desc} already exists"
     # Сохраняем изменения и закрываем соединение
     conn.commit()
     conn.close()

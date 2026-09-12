@@ -100,16 +100,22 @@ def search_items(request: Request, q: str):
                "q": q})
 
 
-#загрузка фото и описания
-@router.post("/upload_image/{color_connection}/{username}", name="upload_image")
+#добавление примера
+@router.post("/upload_exampe/{color_connection}/{username}", name="upload_example")
 async def create_upload_file(color_connection: str, request: Request,
-                             username: str,
-                             file: UploadFile, desc: str = Form(...),):
+                             username: str, file: UploadFile,
+                             printer: str = Form(...),
+                             extruder_temperature: str | None = Form(default=None),
+                             table_temperature: str | None = Form(default=None),
+                             desc: str | None = Form(default=None),):
     #если файл не изображение
     if file.content_type not in ["image/jpeg", "image/png"]:
         raise HTTPException(400, detail="Недопустимый тип файла")
     else:
-        await service_example.upload_file(parent_dir, file, desc, color_connection, username)
+        await service_example.upload_file(parent_dir, file)
+        await service_example.create_example(color_connection, username,
+                                             file, printer, extruder_temperature,
+                                       table_temperature, desc)
         add_example_message = "Добавили ваш пример"
 
         return template_obj.TemplateResponse(

@@ -1,12 +1,16 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 
 #модель примеров
 class Example(BaseModel):
-    desc: str
+    printer: str
+    table_temperature: Optional[int] = None #необязательное значение
+    extruder_temperature: Optional[int] = None
+    desc: Optional[str] = None
     image: str #расположение файла
-    color_connection: str #связь с поределенным цветом
+    color_connection: str #связь с определенным цветом
     user: str #пользователь
 
 #модель цвета филамента

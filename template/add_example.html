@@ -2,13 +2,21 @@
 
 {% block content %}
 	<h1>Добавить пример</h1>
-	<form action="{{ url_for('upload_image', color_connection=color_connection, username=username) }}" method="POST" enctype="multipart/form-data">
+	<p>* - необязательные значения</p>
+	<form action="{{ url_for('upload_example', color_connection=color_connection, username=username) }}" method="POST" enctype="multipart/form-data">
     	<label for="file">Загрузи фото (формат JPEG, PNG):</label>
     	<p><input name="file" type="file" accept="image/*"></p>
-		<label for="desc">Описание:</label>
+		<label for="printer">Название принтера:</label>
+		<p><input type="text" name="printer"></p>
+		<label for="extruder_temperature">Температура экструдера, °С*:</label>
+		<p><input type="text" name="extruder_temperature"></p>
+		<label for="table_temperature">Температура стола, °С*:</label>
+		<p><input type="text" name="table_temperature"></p>
+		<label for="desc">Описание*:</label>
 		<p><input type="text" name="desc"></p>
    
     	<button type="submit" id="send_example_button">Добавить пример</button>
 	</form>
+	<p></p>
 	
 {% endblock %}
