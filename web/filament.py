@@ -65,16 +65,28 @@ def add_example(request: Request, type_connection: str,
         context={"type_connection": type_connection})
 
 # получение примеров изделий по цвету
-@router.get("/example/{type_connection}/{color}", name="show_example")
+@router.get("/examples/{type_connection}/{color}", name="show_examples")
 def show_example(request: Request, type_connection: str, color: str):
     color_connection = f"{color.lower()}_{type_connection}"
     print(color_connection)
     return template_obj.TemplateResponse(
         request=request,
-        name="example.html",
+        name="examples.html",
         context={"color": color,
                  "color_connection": color_connection,
                  "examples": service_example.get_color_example(color_connection)})
+
+# получение примеров изделий по цвету
+# @router.get("/example/{type_connection}/{color}", name="show_some_examples")
+# def show_examples(request: Request, type_connection: str, color: str):
+#     color_connection = f"{color.lower()}_{type_connection}"
+#     print(color_connection)
+#     return template_obj.TemplateResponse(
+#         request=request,
+#         name="examples.html",
+#         context={"color": color,
+#                  "color_connection": color_connection,
+#                  "examples": service_example.get_color_example(color_connection)})
 
 
 #добавить пример
@@ -120,7 +132,7 @@ async def create_upload_file(color_connection: str, request: Request,
 
         return template_obj.TemplateResponse(
             request=request,
-            name="example.html",
+            name="examples.html",
             context={"color_connection": color_connection,
                      "add_example_message": add_example_message,
                      "examples": service_example.get_color_example(color_connection)})
