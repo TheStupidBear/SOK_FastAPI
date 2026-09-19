@@ -4,11 +4,13 @@ import uvicorn
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from web import filament, user
+from web import producer_type, user, color, example
 
 
 app = FastAPI()
-app.include_router(filament.router)
+app.include_router(producer_type.router)
+app.include_router(color.router)
+app.include_router(example.router)
 app.include_router(user.router)
 
 #разрешения

@@ -45,7 +45,7 @@ def model_to_dict(example: Example) -> dict:
     return example.dict()
 
 
-def get_color_example(color_connection) -> list[Example]:
+def get_examples(color_connection) -> list[Example]:
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
     qry = "select * from example where color_connection=:color_connection"

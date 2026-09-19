@@ -5,8 +5,8 @@ import aiofiles
 # Размер порции данных для чтения (1024 КБ = 1 МБ)
 CHUNK_SIZE = 1024 * 1024
 
-def get_color_example(color_connection) -> list[Example]:
-    return data.get_color_example(color_connection)
+def get_examples(color_connection) -> list[Example]:
+    return data.get_examples(color_connection)
 
 async def create_example(color_connection, username, file, printer, extruder_temperature,
                                        table_temperature, desc) -> str:

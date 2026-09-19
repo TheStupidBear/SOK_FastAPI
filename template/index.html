@@ -1,13 +1,16 @@
 {% extends 'main.html' %}
 
 {% block content %}
-	<h3>Привет, мой друг! Это приложение для определения цвета филамента разных производителей
+	<h3>Привет, мой друг! Это приложение для определения цвета и характеристик печати филамента разных производителей
        (примеры готовых изделий).</h3>
-    <h3>Когда покупаешь филамент, тяжело определить цвет изделия из него. Надеюсь это приложение вам поможет.</h3>
-    <div class="item">
-            <form action="filament/search_color/" method="get">
+       <h3>Поиск цвета по HEX коду:</h3>
+    <div class="search_color">
+            <p>Без знака '#' (пример - ff85a9)</p>
+            <p></p>
+            <form action="color/search_color/" method="get">
                 <input type="text" name="q" placeholder="Введите hex..." required>
                 <button type="submit">Поиск</button>
             </form>
+
     </div>
 {% endblock %}
