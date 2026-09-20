@@ -29,12 +29,13 @@ def show_examples(request: Request, type_connection: str, color: str):
                  "examples": service_example.get_examples(color_connection)})
 
 #получение отдельного примера (example)
-@router.get("/some_example/{color_connection}", name="show_some_example")
-def show_some_example(request: Request):
+@router.get("/some_example/{printer}", name="show_some_example")
+def show_some_example(request: Request, printer: str):
+    example = service_example.get_some_example(printer)
     return template_obj.TemplateResponse(
         request=request,
         name="some_example.html",
-        context={})
+        context={"example": example})
 
 
 #добавить пример

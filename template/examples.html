@@ -33,7 +33,7 @@
                 <img src={{ example.image }} alt="Не прогрузилось(">
                 <div class="signature">
                     <figcaption>
-                        <a href="{{ url_for('show_some_example', color_connection=color_connection) }}">
+                        <a href="{{ url_for('show_some_example', printer=example.printer) }}">
                         {{ example.printer }}</a>
                     </figcaption>
                     <figcaption>Описание - {{ example.desc }}</figcaption>

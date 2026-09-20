@@ -1,5 +1,26 @@
 {% extends 'main.html' %}
 
 {% block content %}
-	<h3>Страница примера</h3>
+<style>
+        .photo img {
+            width: 200px;
+            height: 300px;
+            object-type: cover; /* или object-fit: cover */
+            border-radius: 8px;
+            border: 1px solid black; /* толщина, стиль, цвет */
+        }
+        figcaption {
+            font-size: 15px;
+        }
+</style>    
+	<figure class="photo">
+                <img src={{ example.image }} alt="Не прогрузилось(">
+                <div class="signature">
+                    <figcaption>Принтер - {{ example.printer }}</figcaption>
+                    <figcaption>Температура стола - {{ example.table_temperature }}</figcaption>
+                    <figcaption>Температура экструдера - {{ example.extruder_temperature }}</figcaption>
+                    <figcaption>Описание - {{ example.desc }}</figcaption>
+                    <figcaption>Пользователь - {{ example.user }}</figcaption>
+                </div>
+    </figure>
 {% endblock %}

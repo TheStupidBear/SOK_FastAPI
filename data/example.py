@@ -55,6 +55,19 @@ def get_examples(color_connection) -> list[Example]:
     conn.close()
     return [row_to_model(row) for row in rows]
 
+def get_some_example(printer) -> Example:
+    conn = sqlite3.connect(db_path)
+    curs = conn.cursor()
+    qry = "select * from example where printer=:printer"
+    params = {"printer": printer}
+    curs.execute(qry, params)
+    row = curs.fetchone() #получаем один пример
+    conn.close()
+    if row:  # если не пустой
+        return row_to_model(row)
+    else:
+        print(f"Пример не найден")
+
 def create(example: Example):
     if not example: return None
     conn = sqlite3.connect(db_path)

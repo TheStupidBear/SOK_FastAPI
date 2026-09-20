@@ -8,6 +8,9 @@ CHUNK_SIZE = 1024 * 1024
 def get_examples(color_connection) -> list[Example]:
     return data.get_examples(color_connection)
 
+def get_some_example(printer) -> Example:
+    return data.get_some_example(printer)
+
 async def create_example(color_connection, username, file, printer, extruder_temperature,
                                        table_temperature, desc) -> str:
     example = Example(printer=printer, extruder_temperature=extruder_temperature,
