@@ -13,6 +13,7 @@ class Example(BaseModel):
     image: str #расположение файла
     color_connection: str #связь с определенным цветом
     user: str #пользователь
+    raiting: int = 0
 
 #модель цвета филамента
 class Color(BaseModel):

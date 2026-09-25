@@ -20,6 +20,7 @@ def init_example():
      desc text, 
      image text,
      user text,
+     raiting integer DEFAULT 0, 
      color_connection text,
      FOREIGN KEY (color_connection) REFERENCES color(color_type_producer))""")
     # Сохраняем изменения и закрываем соединение
@@ -36,10 +37,11 @@ def row_to_model(row: tuple) -> Example:
     desc = row[4]
     image = row[5]
     user = row[6]
-    color_connection = row[7]
+    raiting = row[7]
+    color_connection = row[8]
     return Example(id=id, printer=printer, table_temperature=table_temperature,
                    extruder_temperature=extruder_temperature, desc=desc,
-                   image=image, user=user, color_connection=color_connection)
+                   image=image, user=user, raiting=raiting, color_connection=color_connection)
 
 #преобразует обьект модели в словарь
 def model_to_dict(example: Example) -> dict:
