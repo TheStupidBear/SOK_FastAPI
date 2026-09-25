@@ -5,6 +5,7 @@ from typing import Optional
 
 #модель примеров
 class Example(BaseModel):
+    id: Optional[int] = None
     printer: str
     table_temperature: Optional[int] = None #необязательное значение
     extruder_temperature: Optional[int] = None

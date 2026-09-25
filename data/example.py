@@ -29,6 +29,7 @@ def init_example():
 
 #преобразует кортеж в обьект модели
 def row_to_model(row: tuple) -> Example:
+    id = row[0]
     printer = row[1]
     table_temperature = row[2]
     extruder_temperature = row[3]
@@ -36,7 +37,7 @@ def row_to_model(row: tuple) -> Example:
     image = row[5]
     user = row[6]
     color_connection = row[7]
-    return Example(printer=printer, table_temperature=table_temperature,
+    return Example(id=id, printer=printer, table_temperature=table_temperature,
                    extruder_temperature=extruder_temperature, desc=desc,
                    image=image, user=user, color_connection=color_connection)
 
@@ -55,11 +56,11 @@ def get_examples(color_connection) -> list[Example]:
     conn.close()
     return [row_to_model(row) for row in rows]
 
-def get_some_example(printer) -> Example:
+def get_some_example(id) -> Example:
     conn = sqlite3.connect(db_path)
     curs = conn.cursor()
-    qry = "select * from example where printer=:printer"
-    params = {"printer": printer}
+    qry = "select * from example where id=:id"
+    params = {"id": id}
     curs.execute(qry, params)
     row = curs.fetchone() #получаем один пример
     conn.close()
