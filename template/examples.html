@@ -30,7 +30,9 @@
     <div class="gallery">
  	  {% for example in examples: %}
             <figure class="photo">
-                <img src={{ example.image }} alt="Не прогрузилось(">
+                <a href="{{ url_for('show_some_example', id=example.id) }}">
+                    <img src={{ example.image }} alt="Не прогрузилось(">
+                </a>
                 <div class="signature">
                     <figcaption>
                         <a href="{{ url_for('show_some_example', id=example.id) }}">

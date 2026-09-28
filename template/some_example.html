@@ -2,26 +2,46 @@
 
 {% block content %}
 <style>
-        .photo img {
-            width: 200px;
-            height: 300px;
+        img {
+            width: 300px;
+            height: 400px;
             object-type: cover; /* или object-fit: cover */
             border-radius: 8px;
             border: 1px solid black; /* толщина, стиль, цвет */
         }
-        figcaption {
-            font-size: 15px;
-        }
-</style>    
-	<figure class="photo">
-                <img src={{ example.image }} alt="Не прогрузилось(">
-                <div class="signature">
-                    <figcaption>Принтер - {{ example.printer }}</figcaption>
-                    <figcaption>Температура стола - {{ example.table_temperature }}</figcaption>
-                    <figcaption>Температура экструдера - {{ example.extruder_temperature }}</figcaption>
-                    <figcaption>Описание - {{ example.desc }}</figcaption>
-                    <figcaption>Пользователь - {{ example.user }}</figcaption>
-                    <figcaption>Рейтинг - {{ example.raiting }}</figcaption>
-                </div>
-    </figure>
+</style>
+<div class="container">
+    <div class="item">
+        <img src={{ example.image }} alt="Не прогрузилось(">
+    </div>
+    <div class="item">
+        <table bgcolor="#eeeeee">
+            <tr class="table">
+                <tbody>
+                    <tr>
+                        <td>Принтер</td>
+                        <td>{{ example.printer }}</td>
+                    </tr>
+                    <tr>
+                        <td>t стола °C</td>
+                        <td>{{ example.table_temperature }}</td>
+                    </tr>
+                    <tr>
+                        <td>t экструдера °C</td>
+                        <td>{{ example.extruder_temperature }}</td>
+                    </tr>
+                    <tr>
+                        <td>Описание</td>
+                        <td>{{ example.desc }}</td>
+                    </tr>
+                    <tr>
+                        <td>Пользователь</td>
+                        <td>{{ example.user }}</td>
+                    </tr>
+                </tbody>
+        </table>
+        <p>Рейтинг - {{ example.raiting }}</p>
+    </div>
+</div>    
+	
 {% endblock %}
