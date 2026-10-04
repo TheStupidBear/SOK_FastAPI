@@ -71,6 +71,27 @@ def get_some_example(id) -> Example:
     else:
         print(f"Пример не найден")
 
+def up_rating_example(id):
+    conn = sqlite3.connect(db_path)
+    curs = conn.cursor()
+    qry = "update example set raiting=raiting+1 where id=:id"
+    params = {"id": id}
+    curs.execute(qry, params)
+    # Сохранение изменений и закрытие соединения
+    conn.commit()
+    conn.close()
+
+def down_rating_example(id):
+    conn = sqlite3.connect(db_path)
+    curs = conn.cursor()
+    qry = "update example set raiting=raiting-1 where id=:id"
+    params = {"id": id}
+    curs.execute(qry, params)
+    # Сохранение изменений и закрытие соединения
+    conn.commit()
+    conn.close()
+
+
 def create(example: Example):
     if not example: return None
     conn = sqlite3.connect(db_path)

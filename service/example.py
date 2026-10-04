@@ -11,6 +11,12 @@ def get_examples(color_connection) -> list[Example]:
 def get_some_example(id) -> Example:
     return data.get_some_example(id)
 
+def up_rating_example(id) -> Example:
+    return data.up_rating_example(id)
+
+def down_rating_example(id) -> Example:
+    return data.down_rating_example(id)
+
 async def create_example(color_connection, username, file, printer, extruder_temperature,
                                        table_temperature, desc) -> str:
     example = Example(printer=printer, extruder_temperature=extruder_temperature,

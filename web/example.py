@@ -37,6 +37,26 @@ def show_some_example(request: Request, id: int):
         name="some_example.html",
         context={"example": example})
 
+#повысить рейтинг
+@router.get("/up_rating/{id}", name="up_rating")
+def up_rating(request: Request, id: int):
+    example = service_example.get_some_example(id)
+    service_example.up_rating_example(id)
+    return template_obj.TemplateResponse(
+        request=request,
+        name="some_example.html",
+        context={"example": example})
+
+#понизить рейтинг
+@router.get("/down_rating/{id}", name="down_rating")
+def down_rating(request: Request, id: int):
+    service_example.down_rating_example(id)
+    example = service_example.get_some_example(id)
+    return template_obj.TemplateResponse(
+        request=request,
+        name="some_example.html",
+        context={"example": example})
+
 
 #добавить пример
 @router.get("/add_example/{color_connection}", name="add_example")

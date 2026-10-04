@@ -2,6 +2,15 @@
 
 {% block content %}
 <style>
+        .a_rating {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FFFFF0;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
         img {
             width: 300px;
             height: 400px;
@@ -40,8 +49,11 @@
                     </tr>
                 </tbody>
         </table>
-        <p>Рейтинг - {{ example.raiting }}</p>
+        <div class="rating">
+            <a href="{{ url_for('up_rating', id=example.id) }}" class="a_rating">👍</a>
+            <a href="{{ url_for('down_rating', id=example.id) }}" class="a_rating">👎️</a>
+        </div>
+        <p>Рейтинг - {{ example.raiting }}</p>  
     </div>
 </div>    
-	
 {% endblock %}
