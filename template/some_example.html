@@ -49,11 +49,6 @@
                     </tr>
                 </tbody>
         </table>
-        <div class="rating">
-            <a href="{{ url_for('up_rating', id=example.id) }}" class="a_rating">👍</a>
-            <a href="{{ url_for('down_rating', id=example.id) }}" class="a_rating">👎️</a>
-        </div>
-        <p>Рейтинг - {{ example.raiting }}</p>  
     </div>
 </div>    
 {% endblock %}
