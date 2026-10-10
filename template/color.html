@@ -13,7 +13,7 @@
 	<a href="{{ url_for('add_color', type_connection=type_connection) }}">
         <button type="submit" id="add_color_button">Добавить цвет</button>
     </a>
-    <p id="error_message"></p>
+    <p id="error_message">{{color_error_message}}</p>
 	<table bgcolor="#eeeeee">
  	<tr>
  		<th>Название</th>

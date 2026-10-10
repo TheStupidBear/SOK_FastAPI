@@ -73,7 +73,7 @@ def create(color: Color):
     try:
         curs.execute(qry, params)
     except sqlite3.IntegrityError:
-        raise f"Color {color.name} already exists"
+        raise sqlite3.IntegrityError(f"Цвет '{color.hex}' уже существует в этой таблице")
     # Сохраняем изменения и закрываем соединение
     conn.commit()
     conn.close()

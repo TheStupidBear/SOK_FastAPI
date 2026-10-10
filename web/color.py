@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request, Form, Depends
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
 from typing import Annotated
+import sqlite3
 import service.user as service_user
 from data.color import init_color
 import service.color as service_color
@@ -48,10 +49,18 @@ def search_items(request: Request, q: str):
 async def create_upload_file(type_connection: str, request: Request,
                              name: str = Form(...), hex: str = Form(...)):
     hex = hex.lower() #понижаем регистр
-    service_color.hex_to_image(parent_dir, hex, name)
-    service_color.create_color(hex, name, type_connection)
+
+    new_name = name.replace(" ", "_") # Заменить все пробелы на _
+    service_color.hex_to_image(parent_dir, hex, new_name)
+    try:
+        service_color.create_color(hex, new_name, type_connection)
+    except sqlite3.IntegrityError as e:  #ловим ошибку, если есть такой цвет в таблице
+        color_error_message = e
+    else:
+        color_error_message = ''
     return template_obj.TemplateResponse(
         request=request,
         name="color.html",
         context={"type_connection": type_connection,
-                 "colors": service_color.get_producer_color(type_connection)})
+                 "colors": service_color.get_producer_color(type_connection),
+                 "color_error_message": color_error_message})
