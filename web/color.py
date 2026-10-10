@@ -51,7 +51,7 @@ async def create_upload_file(type_connection: str, request: Request,
     hex = hex.lower() #понижаем регистр
 
     new_name = name.replace(" ", "_") # Заменить все пробелы на _
-    service_color.hex_to_image(parent_dir, hex, new_name)
+    service_color.hex_to_image(parent_dir, hex, new_name, type_connection)
     try:
         service_color.create_color(hex, new_name, type_connection)
     except sqlite3.IntegrityError as e:  #ловим ошибку, если есть такой цвет в таблице

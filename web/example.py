@@ -82,7 +82,7 @@ async def create_upload_file(color_connection: str, request: Request,
     if file.content_type not in ["image/jpeg", "image/png"]:
         raise HTTPException(400, detail="Недопустимый тип файла")
     else:
-        await service_example.upload_file(parent_dir, file)
+        await service_example.upload_file(parent_dir, file, color_connection)
         await service_example.create_example(color_connection, username,
                                              file, printer, extruder_temperature,
                                        table_temperature, desc)

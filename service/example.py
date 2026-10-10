@@ -26,7 +26,7 @@ async def create_example(color_connection, username, file, printer, extruder_tem
     return data.create(example)
 
 #сохраняем изображение на диск
-async def upload_file(parent_dir, file):
+async def upload_file(parent_dir, file, color_connection):
     file_path = f"{parent_dir}/static/image_example/{file.filename}"
     # Открываем целевой файл асинхронно для записи байтов ("wb")
     async with aiofiles.open(file_path, "wb") as out_file:
