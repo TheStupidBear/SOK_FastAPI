@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request, Form
+from fastapi import APIRouter, Depends, Request, Form, HTTPException
 from pathlib import Path
 from fastapi.templating import Jinja2Templates
 from typing import Annotated
@@ -25,14 +25,23 @@ async def login(request: Request):
 #проверка логина и возврат токена
 @router.post("/get_token")
 async def get_token(request: Request, username: Annotated[str, Form()], password: Annotated[str, Form()]):
-    #получаем токен и возращаем клиенту
-    token = await service.login_for_access_token(username, password)
-    print(f"token - {token}")
-    return template_obj.TemplateResponse(
-        request=request,
-        name="success_login.html",
-        context={"request": request,
-                "token": token.access_token})
+    try:
+        # получаем токен и возращаем клиенту
+        token = await service.login_for_access_token(username, password)
+        return template_obj.TemplateResponse(
+            request=request,
+            name="success_login.html",
+            context={"request": request,
+                     "token": token.access_token})
+    except HTTPException:
+        login_error_message = "Неправильный логин или пароль"
+        return template_obj.TemplateResponse(
+            request=request,
+            name="login.html",
+            context={"login_error_message": login_error_message})
+
+
+
 
 
 #страница регистрации

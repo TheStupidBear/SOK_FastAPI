@@ -2,6 +2,7 @@
 
 {% block content %}
 	<h1>Войти</h1>
+	<h3>{{login_error_message}}</h3>
 	<form action="/user/get_token" method="post">
 		<label for="username">Логин:</label>
 		<input type="text" name="username">
